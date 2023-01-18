@@ -1,7 +1,7 @@
 import mysql.connector
 
 
-class Database:
+class DatabaseHelperService:
     def __init__(self, name):
         self._conn = mysql.connector.connect(host="localhost",
                                              user="root",

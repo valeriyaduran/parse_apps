@@ -7,7 +7,7 @@ class SetupBrowser:
         self.wd.maximize_window()
 
     def start_page(self):
-        self.wd.get('https://apps.microsoft.com/store/category/Business')
+        self.wd.get("https://apps.microsoft.com/store/category/Business")
 
     def quit(self):
         self.wd.close()
