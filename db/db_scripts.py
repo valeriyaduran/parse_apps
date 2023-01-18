@@ -2,9 +2,9 @@ from db.db_service import Database
 
 
 class DBHelper:
-    create_db_sql = '''CREATE DATABASE business_apps4'''
-    use_db_sql = '''USE business_apps4'''
-    create_table_sql = '''CREATE TABLE apps_data4 (
+    create_db_sql = '''CREATE DATABASE business_apps'''
+    use_db_sql = '''USE business_apps'''
+    create_table_sql = '''CREATE TABLE apps_data (
                         id INT NOT NULL AUTO_INCREMENT, 
                         business_app_name VARCHAR(255), 
                         company_name VARCHAR(255), 
