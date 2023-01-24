@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 from db.db_scripts_service import DBScriptsService
+from html_page.add_business_apps_to_html import HTMLHelper
 from setup_browser_service import SetupBrowser
 
 
@@ -29,7 +30,7 @@ class ParseApps:
     def get_all_fields(wd, business_apps):
         data = []
         counter = 1
-        for i in range(len(business_apps[:2])):
+        for i in range(len(business_apps)):
             wd.get(f"{business_apps[i]}")
             business_app_name = ParseApps.get_business_app_name(wd)
             company_name = ParseApps.get_company_name(wd, business_app_name)
@@ -43,7 +44,8 @@ class ParseApps:
             counter += 1
             wd.execute_script("window.history.go(-1)")
             wd.implicitly_wait(3)
-        DBScriptsService.insert_data_into_table(data)
+        DBScriptsService().insert_data_into_table(data)
+        HTMLHelper.save_data_to_rows(data)
         return data
 
     @staticmethod

@@ -1,43 +1,30 @@
 from db.db_helper_service import DatabaseHelperService
+from db.db_queries import create_db_sql, use_db_sql, create_table_sql, insert_data_sql
 
 
 class DBScriptsService:
-    create_db_sql = """CREATE DATABASE business_apps"""
-    use_db_sql = """USE business_apps"""
-    create_table_sql = """CREATE TABLE apps_data (
-                        id INT NOT NULL AUTO_INCREMENT, 
-                        business_app_name VARCHAR(255), 
-                        company_name VARCHAR(255), 
-                        release_year VARCHAR(255), 
-                        email VARCHAR(255), 
-                        PRIMARY KEY (id)
-                        )"""
-    insert_data_sql = """INSERT INTO apps_data (business_app_name, company_name, release_year, email) 
-                        VALUES (%s, %s, %s, %s)"""
+    def __init__(self):
+        self._db_helper = DatabaseHelperService("business_apps")
 
-    @classmethod
-    def create_database(cls):
-        db_helper.execute(sql=cls.create_db_sql)
+    def create_database(self):
+        self._db_helper.execute(sql=create_db_sql)
 
-    @classmethod
-    def create_table(cls):
-        db_helper.execute(sql=cls.use_db_sql)
-        db_helper.execute(sql=cls.create_table_sql)
+    def create_table(self):
+        self._db_helper.execute(sql=use_db_sql)
+        self._db_helper.execute(sql=create_table_sql)
 
-    @classmethod
-    def insert_data_into_table(cls, data):
-        db_helper = DatabaseHelperService("business_apps")
+    def insert_data_into_table(self, data):
         for item in data:
-            db_helper.execute(cls.insert_data_sql, (item["business_app_name"],
-                                                    item["company_name"],
-                                                    item["release_year"],
-                                                    item["email"]))
+            self._db_helper.execute(insert_data_sql, (item["business_app_name"],
+                                                      item["company_name"],
+                                                      item["release_year"],
+                                                      item["email"]))
 
-        db_helper.commit()
-        db_helper.close()
+        self._db_helper.commit()
+        self._db_helper.close()
 
 
 if __name__ == "__main__":
-    db_helper = DatabaseHelperService("business_apps")
-    DBScriptsService.create_database()
-    DBScriptsService.create_table()
+    db_scripts_service = DBScriptsService()
+    DBScriptsService.create_database(db_scripts_service)
+    DBScriptsService.create_table(db_scripts_service)

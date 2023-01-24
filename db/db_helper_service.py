@@ -1,10 +1,12 @@
+import os
+
 import mysql.connector
 
 
 class DatabaseHelperService:
     def __init__(self, name):
-        self._conn = mysql.connector.connect(host="localhost",
-                                             user="root",
+        self._conn = mysql.connector.connect(host=os.environ.get("DB_HOST"),
+                                             user=os.environ.get("DB_USER"),
                                              database=name)
         self._cursor = self._conn.cursor()
 
